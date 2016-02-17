@@ -1,11 +1,11 @@
 library("GEOquery")
 
-GEO <- function(x){
-  getGEO(GEO = x, destdir = ".")
+GEO <- function(x,y){
+  dir.create(y)
+  for(i in test[,1]){
+    getGEO(GEO = i, destdir = y)
+  }
 }
 
 test <- read.table("geos.txt")
-
-for(i in test[,1]){
-  GEO(i)
-}
+GEO(test,"./Alz")
