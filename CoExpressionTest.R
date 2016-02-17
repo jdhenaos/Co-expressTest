@@ -1,7 +1,11 @@
 library("GEOquery")
 
 GEO <- function(x,y){
-  dir.create(y)
+  if(dir.exists(y)){
+    options(wwarn = -1)
+  }else{
+    dir.create(y)
+  }
   for(i in test[,1]){
     getGEO(GEO = i, destdir = y)
   }
