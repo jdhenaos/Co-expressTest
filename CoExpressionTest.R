@@ -2,14 +2,19 @@ library("GEOquery")
 
 GEO <- function(x,y){
   if(dir.exists(y)){
-    options(wwarn = -1)
+    options(warn = -1)
   }else{
     dir.create(y)
   }
-  for(i in test[,1]){
+  for(i in x[,1]){
     getGEO(GEO = i, destdir = y)
   }
 }
 
-test <- read.table("geos.txt")
-GEO(test,"./Alz")
+ADGEO <- read.table("Alzheimer_Chips.txt")
+PDGEO <- read.table("Parkinson_Chips.txt")
+MSGEO <- read.table("MultipleSclerosis_Chips.txt")
+
+GEO(ADGEO,"./Alzheimer_GSE")
+GEO(PDGEO,"./Parkinson_GSE")
+GEO(MSGEO,"./MultipleSclerosis_GSE")
