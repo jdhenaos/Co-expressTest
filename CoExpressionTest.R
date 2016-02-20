@@ -11,9 +11,9 @@ GEO <- function(x,y="."){
   }
 }
 
-GeneSymbol <- function(GPL, dir = "."){
-  setwd(dir)
-  gpl <- getGEO(filename = dir(.)[grep(GPL,dir(.))])
+GeneSymbol <- function(GPL, d = "."){
+  setwd(d)
+  gpl <- getGEO(filename = dir(".")[grep(GPL,dir("."))])
   write.table(table(Table(gpl)$"Gene Symbol"), file = "output")
   setwd("../")
 }
@@ -23,7 +23,7 @@ GeneSymbol <- function(GPL, dir = "."){
 #GEO(read.table("MultipleSclerosis_Chips.txt"),"./MultipleSclerosis_GSE")
 
 GEO(read.table("geos.txt"),"./Alz")
-GeneSymbol(GPL570,"./Alz")
+GeneSymbol("GPL570","./Alz")
 
 #########################################################
 GSE68527<-read.csv(gzfile("GSE68527_series_matrix.txt.gz"),
