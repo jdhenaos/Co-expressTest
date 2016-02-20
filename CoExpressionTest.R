@@ -11,8 +11,11 @@ GEO <- function(x,y="."){
   }
 }
 
-GeneSymbol <- function(GPL,dir="."){
-
+GeneSymbol <- function(GPL, dir = "."){
+  setwd(dir)
+  gpl <- getGEO(filename = dir(.)[grep(GPL,dir(.))])
+  write.table(table(Table(gpl)$"Gene Symbol"), file = "output")
+  setwd("../")
 }
 
 #GEO(read.table("Alzheimer_Chips.txt"),"./Alzheimer_GSE")
@@ -20,26 +23,10 @@ GeneSymbol <- function(GPL,dir="."){
 #GEO(read.table("MultipleSclerosis_Chips.txt"),"./MultipleSclerosis_GSE")
 
 GEO(read.table("geos.txt"),"./Alz")
+GeneSymbol(GPL570,"./Alz")
 
 #########################################################
 GSE68527<-read.csv(gzfile("GSE68527_series_matrix.txt.gz"),
                    comment.char = "!", 
                    sep = "\t",
                    stringsAsFactors = FALSE)
-
-
-setwd("./Alz")
-gpl3 <- scan(dir(".")[grep("GPL570",dir("."))], comment.char = "!",
-                skip = 1,  sep = "\t", character())
-
-head(as.data.frame(gpl3[grep("[#|^]",gpl3,invert = T)], sep = "t"))
-
-head("./GPL570.soft")
-
-gpl <- getGEO(filename = "GPL570.soft")
-colnames(Table(gpl))
-table(Table(gpl)$"Gene Symbol")
-write(table(Table(gpl)$"Gene Symbol"), file = "output")
-paste(Table(gpl)$"Gene Symbol"[1],":",table(Table(gpl)$"Gene Symbol"[1]))
-
-
