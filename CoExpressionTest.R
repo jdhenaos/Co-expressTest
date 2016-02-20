@@ -11,8 +11,8 @@ GEO <- function(x,y="."){
   }
 }
 
-GeneSymbol <- function(GPL){
-  
+GeneSymbol <- function(GPL,dir="."){
+
 }
 
 #ADGEO <- read.table("Alzheimer_Chips.txt")
@@ -24,3 +24,10 @@ GeneSymbol <- function(GPL){
 #GEO(MSGEO,"./MultipleSclerosis_GSE")
 
 GEO(read.table("geos.txt"),"./Alz")
+
+#########################################################
+
+setwd("./Alz")
+gpl3 <- scan(dir(".")[grep("GPL570",dir("."))], comment.char = "!", sep = "\t", 
+             character())
+gpl3[grep("#",gpl3,invert = T)]
