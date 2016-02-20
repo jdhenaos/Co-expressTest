@@ -29,5 +29,8 @@ GEO(read.table("geos.txt"),"./Alz")
 
 setwd("./Alz")
 gpl3 <- scan(dir(".")[grep("GPL570",dir("."))], comment.char = "!", sep = "\t", 
-             character())
+                 character())
+
+gpl <- getGEO(filename = "GPL570.soft")
+
 gpl3[grep("#",gpl3,invert = T)]
