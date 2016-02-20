@@ -15,22 +15,23 @@ GeneSymbol <- function(GPL,dir="."){
 
 }
 
-#ADGEO <- read.table("Alzheimer_Chips.txt")
-#PDGEO <- read.table("Parkinson_Chips.txt")
-#MSGEO <- read.table("MultipleSclerosis_Chips.txt")
-
-#GEO(ADGEO,"./Alzheimer_GSE")
-#GEO(PDGEO,"./Parkinson_GSE")
-#GEO(MSGEO,"./MultipleSclerosis_GSE")
+#GEO(read.table("Alzheimer_Chips.txt"),"./Alzheimer_GSE")
+#GEO(read.table("Parkinson_Chips.txt"),"./Parkinson_GSE")
+#GEO(read.table("MultipleSclerosis_Chips.txt"),"./MultipleSclerosis_GSE")
 
 GEO(read.table("geos.txt"),"./Alz")
 
 #########################################################
+GSE68527<-read.csv(gzfile("GSE68527_series_matrix.txt.gz"),
+                   comment.char = "!", 
+                   sep = "\t",
+                   stringsAsFactors = FALSE)
+
 
 setwd("./Alz")
-gpl3 <- scan(dir(".")[grep("GPL570",dir("."))], comment.char = "!", sep = "\t", 
-                 character())
+gpl3 <- scan(dir(".")[grep("GPL570",dir("."))], comment.char = "!",
+                skip = 1,  sep = "\t", character())
 
-gpl <- getGEO(filename = "GPL570.soft")
+head(as.data.frame(gpl3[grep("[#|^]",gpl3,invert = T)], sep = "t"))
 
-gpl3[grep("#",gpl3,invert = T)]
+head("./GPL570.soft")
