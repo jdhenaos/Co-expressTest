@@ -1,6 +1,6 @@
 library("GEOquery")
 
-GEO <- function(x,y){
+GEO <- function(x,y="."){
   if(dir.exists(y)){
     options(warn = -1)
   }else{
@@ -11,10 +11,16 @@ GEO <- function(x,y){
   }
 }
 
-ADGEO <- read.table("Alzheimer_Chips.txt")
-PDGEO <- read.table("Parkinson_Chips.txt")
-MSGEO <- read.table("MultipleSclerosis_Chips.txt")
+GeneSymbol <- function(GPL){
+  
+}
 
-GEO(ADGEO,"./Alzheimer_GSE")
-GEO(PDGEO,"./Parkinson_GSE")
-GEO(MSGEO,"./MultipleSclerosis_GSE")
+#ADGEO <- read.table("Alzheimer_Chips.txt")
+#PDGEO <- read.table("Parkinson_Chips.txt")
+#MSGEO <- read.table("MultipleSclerosis_Chips.txt")
+
+#GEO(ADGEO,"./Alzheimer_GSE")
+#GEO(PDGEO,"./Parkinson_GSE")
+#GEO(MSGEO,"./MultipleSclerosis_GSE")
+
+GEO(read.table("geos.txt"),"./Alz")
