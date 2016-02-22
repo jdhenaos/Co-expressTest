@@ -29,6 +29,8 @@ DataUnion <- function{
 GEO(read.table("geos.txt"),"./Alz")
 GeneSymbol("GPL570","./Alz")
 
+##################################################################
+
 f <- dir(".")[grep("^GSE[0-9]+(_|-GPL570)",dir("."))]
 f
 
@@ -46,3 +48,9 @@ GSE52139<-read.csv(gzfile("GSE52139_series_matrix.txt.gz"),
 dim(GSE68527)
 dim(GSE52139)
 
+class(GSE52139)
+class(GSE68527)
+
+A <- data.frame(GSE52139,GSE68527)
+dim(A)
+tail(A$ID_REF)
