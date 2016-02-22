@@ -60,6 +60,8 @@ dim(PD)
 dim(AD)
 dim(MS)
 
+#########################################################
+
 GSE20146 <- ExtractInfo("GSE20146_series_matrix.txt.gz")
 GSE14711 <- ExtractInfo("GSE14711_series_matrix.txt.gz")
 GSE20141 <- ExtractInfo("GSE20141_series_matrix.txt.gz")
@@ -70,6 +72,9 @@ GSE49036 <- ExtractInfo("GSE49036_series_matrix.txt.gz")
 GSE7621 <- ExtractInfo("GSE7621_series_matrix.txt.gz")
 GSE9807 <- ExtractInfo("GSE9807_series_matrix.txt.gz")
 
+GSE4757 <- ExtractInfo("GSE4757_series_matrix.txt.gz")
+dim(GSE4757)
+
 dim(GSE20146)
 dim(GSE14711)
 dim(GSE20141)
@@ -79,3 +84,8 @@ dim(GSE4773)
 dim(GSE49036)
 dim(GSE7621)
 dim(GSE9807)
+
+t1 <- (GSE49036$ID_REF)
+t2 <- (GSE7621$ID_REF)
+
+write(paste(t1,":",t2),file = "compare")
