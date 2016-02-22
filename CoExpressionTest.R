@@ -21,12 +21,12 @@ GeneSymbol <- function(GPL, d = "."){
 }
 
 ExtractInfo <- function(x,d = "."){
-  #setwd(d)
+  setwd(d)
   f<-read.csv(gzfile(x),
                      comment.char = "!", 
                      sep = "\t",
                      stringsAsFactors = FALSE)
-  #setwd("../")
+  setwd("../")
   return(f)
 }
 
@@ -39,7 +39,7 @@ DataUnion <- function(d = "."){
       options(warn = -1)
     }else{
       h <- ExtractInfo(t,d)
-      g <- merge(g,h)
+      g <- merge.data.frame(g,h,by.x = "ID_REF",by.y = "ID_REF",all = TRUE)
     }
   }
   return(g)
@@ -94,8 +94,8 @@ for (t in f){
     options(warn = -1)
   }else{
     h <- ExtractInfo(t,d)
-    for(i in length(h$ID_REF)){
-      for(j in length(g$ID_REF)){
+    for(i in 1:length(h$ID_REF)){
+      for(j in 1:length(g$ID_REF)){
         if(g[,1][j] == h[,1][i]){
           g[j] <- cbind(g[j,],h[i,2:length(h[1,])])
         }
