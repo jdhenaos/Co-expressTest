@@ -42,34 +42,30 @@ GeneSymbol("GPL570","./Alz")
 f <- dir(".")[grep("^GSE[0-9]+(_|-GPL570)",dir("."))]
 f
 
+
+
+g <- 0
 for (t in f){
-  g <- 0
   if(g == 0){
-    print("Vacio")
+    g <- ExtractInfo(t)
+    options(warn = -1)
   }else{
-    print("Lleno")
+    h <- ExtractInfo(t)
+    g <- merge(g,h)
   }
 }
 
+dim(g)
+
 GSE68527 <- ExtractInfo("GSE68527_series_matrix.txt.gz")
-GSE52139<-read.csv(gzfile("GSE52139_series_matrix.txt.gz"),
-                   comment.char = "!", 
-                   sep = "\t",
-                   stringsAsFactors = FALSE)
+GSE52139 <- ExtractInfo("GSE52139_series_matrix.txt.gz")
+GSE16759 <- ExtractInfo("GSE16759-GPL570_series_matrix.txt.gz")
 
 
 dim(GSE68527)
 dim(GSE52139)
+dim(GSE16759)
 
-class(GSE52139)
-class(GSE68527)
-
-A <- data.frame(GSE52139,GSE68527)
+A <- merge(GSE68527,GSE52139)
+head(A)
 dim(A)
-tail(A$ID_REF)
-
-B <- merge(GSE52139,GSE68527)
-dim(B)
-head(B$ID_REF)
-
-
