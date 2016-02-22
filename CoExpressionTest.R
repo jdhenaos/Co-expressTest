@@ -21,12 +21,12 @@ GeneSymbol <- function(GPL, d = "."){
 }
 
 ExtractInfo <- function(x,d = "."){
-  setwd(d)
+  #setwd(d)
   f<-read.csv(gzfile(x),
                      comment.char = "!", 
                      sep = "\t",
                      stringsAsFactors = FALSE)
-  setwd("../")
+  #setwd("../")
   return(f)
 }
 
@@ -55,5 +55,27 @@ D <- DataUnion("./Alz")
 
 AD <- DataUnion("./Alzheimer_GSE")
 PD <- DataUnion("./Parkinson_GSE")
+MS <- DataUnion("./MultipleSclerosis_GSE")
 dim(PD)
 dim(AD)
+dim(MS)
+
+GSE20146 <- ExtractInfo("GSE20146_series_matrix.txt.gz")
+GSE14711 <- ExtractInfo("GSE14711_series_matrix.txt.gz")
+GSE20141 <- ExtractInfo("GSE20141_series_matrix.txt.gz")
+GSE20153 <- ExtractInfo("GSE20153_series_matrix.txt.gz")
+GSE30792 <- ExtractInfo("GSE30792_series_matrix.txt.gz")
+GSE4773 <- ExtractInfo("GSE4773_series_matrix.txt.gz")
+GSE49036 <- ExtractInfo("GSE49036_series_matrix.txt.gz")
+GSE7621 <- ExtractInfo("GSE7621_series_matrix.txt.gz")
+GSE9807 <- ExtractInfo("GSE9807_series_matrix.txt.gz")
+
+dim(GSE20146)
+dim(GSE14711)
+dim(GSE20141)
+dim(GSE20153)
+dim(GSE30792)
+dim(GSE4773)
+dim(GSE49036)
+dim(GSE7621)
+dim(GSE9807)
