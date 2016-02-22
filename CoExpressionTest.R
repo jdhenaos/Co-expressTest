@@ -18,16 +18,29 @@ GeneSymbol <- function(GPL, d = "."){
   setwd("../")
 }
 
-ExtractInfo <- function(x){
+ExtractInfo <- function(x,d = "."){
+  setwd(d)
   f<-read.csv(gzfile(x),
                      comment.char = "!", 
                      sep = "\t",
                      stringsAsFactors = FALSE)
+  setwd("../")
   return(f)
 }
 
-DataUnion <- function(){
-  
+DataUnion <- function(d = "."){
+  f <- dir(d)[grep("^GSE[0-9]+(_|-GPL570)",dir(d))]
+  g <- 0
+  for (t in f){
+    if(g == 0){
+      g <- ExtractInfo(t,d)
+      options(warn = -1)
+    }else{
+      h <- ExtractInfo(t,d)
+      g <- merge(g,h)
+    }
+  }
+  return(g)
 }
 
 #GEO(read.table("Alzheimer_Chips.txt"),"./Alzheimer_GSE")
@@ -36,26 +49,10 @@ DataUnion <- function(){
 
 GEO(read.table("geos.txt"),"./Alz")
 GeneSymbol("GPL570","./Alz")
+D <- DataUnion("./Alz")
+dim(D)
 
-##################################################################
-
-f <- dir(".")[grep("^GSE[0-9]+(_|-GPL570)",dir("."))]
-f
-
-
-
-g <- 0
-for (t in f){
-  if(g == 0){
-    g <- ExtractInfo(t)
-    options(warn = -1)
-  }else{
-    h <- ExtractInfo(t)
-    g <- merge(g,h)
-  }
-}
-
-dim(g)
+#######################
 
 GSE68527 <- ExtractInfo("GSE68527_series_matrix.txt.gz")
 GSE52139 <- ExtractInfo("GSE52139_series_matrix.txt.gz")
@@ -66,6 +63,5 @@ dim(GSE68527)
 dim(GSE52139)
 dim(GSE16759)
 
-A <- merge(GSE68527,GSE52139)
-head(A)
-dim(A)
+f <- dir("./Alz")[grep("^GSE[0-9]+(_|-GPL570)",dir("./Alz"))]
+f
