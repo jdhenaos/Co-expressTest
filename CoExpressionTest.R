@@ -85,10 +85,6 @@ dim(GSE49036)
 dim(GSE7621)
 dim(GSE9807)
 
-t1 <- (GSE49036$ID_REF)
-t2 <- (GSE7621$ID_REF)
-
-write(paste(t1,":",t2),file = "compare")
 ######
 f <- dir(".")[grep("^GSE[0-9]+(_|-GPL570)",dir("."))]
 g <- 0
@@ -98,10 +94,18 @@ for (t in f){
     options(warn = -1)
   }else{
     h <- ExtractInfo(t,d)
-    g <- merge(g,h)
+    for(i in length(h$ID_REF)){
+      for(j in length(g$ID_REF)){
+        if(g[,1][j] == h[,1][i]){
+          g[j] <- cbind(g[j,],h[i,2:length(h[1,])])
+        }
+      }
+    }
   }
 }
 
+dim(g)
+
 if(GSE4757[,1][1] == GSE9807[,1][1]){
-  test <- cbind(GSE4757[1,],GSE9807[2,])
+  test <- cbind(GSE4757[1,],GSE9807[1,2:length(GSE9807[1,])])
 }
