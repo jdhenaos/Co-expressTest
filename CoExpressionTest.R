@@ -89,3 +89,19 @@ t1 <- (GSE49036$ID_REF)
 t2 <- (GSE7621$ID_REF)
 
 write(paste(t1,":",t2),file = "compare")
+######
+f <- dir(".")[grep("^GSE[0-9]+(_|-GPL570)",dir("."))]
+g <- 0
+for (t in f){
+  if(g == 0){
+    g <- ExtractInfo(t,d)
+    options(warn = -1)
+  }else{
+    h <- ExtractInfo(t,d)
+    g <- merge(g,h)
+  }
+}
+
+if(GSE4757[,1][1] == GSE9807[,1][1]){
+  test <- cbind(GSE4757[1,],GSE9807[2,])
+}
