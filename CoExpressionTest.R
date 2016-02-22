@@ -13,8 +13,10 @@ GEO <- function(x,y="."){
 
 GeneSymbol <- function(GPL, d = "."){
   setwd(d)
-  gpl <- getGEO(filename = dir(".")[grep("GPL.soft",dir("."))])
-  write.table(table(Table(gpl)$"Gene Symbol"), file = "output")
+  f <- dir(".")[grep(GPL,dir("."))]
+  f <- f[grep(".soft$",f)]
+  gpl <- getGEO(filename = f)
+  write.table(table(Table(gpl)$"Gene Symbol"), file = "GeneSymbol.txt")
   setwd("../")
 }
 
@@ -52,5 +54,6 @@ GeneSymbol("GPL570")
 D <- DataUnion("./Alz")
 
 AD <- DataUnion("./Alzheimer_GSE")
+PD <- DataUnion("./Parkinson_GSE")
+dim(PD)
 dim(AD)
-head(AD$ID_REF)
