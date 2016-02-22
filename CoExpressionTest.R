@@ -18,7 +18,15 @@ GeneSymbol <- function(GPL, d = "."){
   setwd("../")
 }
 
-DataUnion <- function{
+ExtractInfo <- function(x){
+  f<-read.csv(gzfile(x),
+                     comment.char = "!", 
+                     sep = "\t",
+                     stringsAsFactors = FALSE)
+  return(f)
+}
+
+DataUnion <- function(){
   
 }
 
@@ -34,17 +42,16 @@ GeneSymbol("GPL570","./Alz")
 f <- dir(".")[grep("^GSE[0-9]+(_|-GPL570)",dir("."))]
 f
 
-
 for (t in f){
-  g <- as.character(t[1])
-  print(g[1:2])
+  g <- 0
+  if(g == 0){
+    print("Vacio")
+  }else{
+    print("Lleno")
+  }
 }
 
-GSE68527<-read.csv(gzfile("GSE68527_series_matrix.txt.gz"),
-                   comment.char = "!", 
-                   sep = "\t",
-                   stringsAsFactors = FALSE)
-
+GSE68527 <- ExtractInfo("GSE68527_series_matrix.txt.gz")
 GSE52139<-read.csv(gzfile("GSE52139_series_matrix.txt.gz"),
                    comment.char = "!", 
                    sep = "\t",
