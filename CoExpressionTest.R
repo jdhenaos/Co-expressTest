@@ -32,9 +32,17 @@ GeneSymbol("GPL570","./Alz")
 f <- dir(".")[grep("^GSE[0-9]+(_|-GPL570)",dir("."))]
 f
 
-
-#########################################################
 GSE68527<-read.csv(gzfile("GSE68527_series_matrix.txt.gz"),
                    comment.char = "!", 
                    sep = "\t",
                    stringsAsFactors = FALSE)
+
+GSE52139<-read.csv(gzfile("GSE52139_series_matrix.txt.gz"),
+                   comment.char = "!", 
+                   sep = "\t",
+                   stringsAsFactors = FALSE)
+
+
+dim(GSE68527)
+dim(GSE52139)
+
