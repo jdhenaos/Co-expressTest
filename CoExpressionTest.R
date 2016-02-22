@@ -18,12 +18,20 @@ GeneSymbol <- function(GPL, d = "."){
   setwd("../")
 }
 
+DataUnion <- function{
+  
+}
+
 #GEO(read.table("Alzheimer_Chips.txt"),"./Alzheimer_GSE")
 #GEO(read.table("Parkinson_Chips.txt"),"./Parkinson_GSE")
 #GEO(read.table("MultipleSclerosis_Chips.txt"),"./MultipleSclerosis_GSE")
 
 GEO(read.table("geos.txt"),"./Alz")
 GeneSymbol("GPL570","./Alz")
+
+f <- dir(".")[grep("^GSE[0-9]+(_|-GPL570)",dir("."))]
+f
+
 
 #########################################################
 GSE68527<-read.csv(gzfile("GSE68527_series_matrix.txt.gz"),
