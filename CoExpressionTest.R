@@ -60,7 +60,9 @@ dim(PD)
 dim(AD)
 dim(MS)
 
-PD[is.na(PD)] <- 0
-NPD <- PD[,2:dim(PD)[2]]
 
-write.table(NPD, file = "prube.txt")
+NPD <- PD[,2:dim(PD)[2]]
+row.names(NPD) <- PD$ID_REF
+t <- sapply(NPD, as.numeric)
+write.table(t, file = "prube.txt")
+
