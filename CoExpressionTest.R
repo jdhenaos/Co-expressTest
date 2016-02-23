@@ -42,7 +42,12 @@ DataUnion <- function(d = "."){
       g <- merge.data.frame(g,h,by.x = "ID_REF",by.y = "ID_REF",all = TRUE)
     }
   }
-  return(g)
+  ng <- g[,2:dim(g)[2]]
+  t <- sapply(ng, as.numeric)
+  tt <- as.data.frame(t, row.names = g$ID_REF)
+  tt[is.na(tt)] <- 0
+  y <- rowMeans(tt)
+  return(y)
 }
 
 #GEO(read.table("Alzheimer_Chips.txt"),"./Alzheimer_GSE")
@@ -60,9 +65,4 @@ dim(PD)
 dim(AD)
 dim(MS)
 
-
-NPD <- PD[,2:dim(PD)[2]]
-row.names(NPD) <- PD$ID_REF
-t <- sapply(NPD, as.numeric)
-write.table(t, file = "prube.txt")
 
