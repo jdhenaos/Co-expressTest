@@ -45,8 +45,7 @@ DataUnion <- function(d = "."){
   ng <- g[,2:dim(g)[2]]
   t <- sapply(ng, as.numeric)
   tt <- as.data.frame(t, row.names = g$ID_REF)
-  tt[is.na(tt)] <- 0
-  y <- rowMeans(tt)
+  y <- rowMeans(tt, na.rm = T)
   return(y)
 }
 
@@ -65,4 +64,7 @@ dim(PD)
 dim(AD)
 dim(MS)
 
-
+DF <- data.frame(x = c(1, 2, 3), y = c(0, 10, NA))
+na.omit(DF)
+m <- as.matrix(DF)
+na.omit(m)
