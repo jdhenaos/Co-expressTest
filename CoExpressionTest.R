@@ -74,3 +74,8 @@ sym <- Table(gpl)
 p <- data.frame(sym$`Gene Symbol`, stringsAsFactors = F)
 q <- data.frame(p, names(PD), PD, stringsAsFactors = F)
 r <- subset(q, q$PD >= a[5])
+s <- data.frame(unique(r$sym..Gene.Symbol.), c(0), stringsAsFactors = F)
+
+for(i in s$sym..Gene.Symbol.){
+  s[grep(i,s$unique.r.sym..Gene.Symbol..),2] <- max(r[grep(i,r$sym..Gene.Symbol.),3])
+}
