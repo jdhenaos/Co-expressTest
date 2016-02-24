@@ -66,9 +66,11 @@ dim(PD)
 dim(AD)
 dim(MS)
 
+a <- summary(PD)
 f <- dir(".")[grep("GPL570",dir("."))]
 f <- f[grep(".soft$",f)]
 gpl <- getGEO(filename = f)
 sym <- Table(gpl)
-p <- data.frame(sym$ID,sym$`Gene Symbol`, stringsAsFactors = F)
+p <- data.frame(sym$`Gene Symbol`, stringsAsFactors = F)
 q <- data.frame(p, names(PD), PD, stringsAsFactors = F)
+r <- subset(q, q$PD >= a[5])
