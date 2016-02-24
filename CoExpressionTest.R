@@ -16,8 +16,10 @@ GeneSymbol <- function(GPL, d = "."){
   f <- dir(".")[grep(GPL,dir("."))]
   f <- f[grep(".soft$",f)]
   gpl <- getGEO(filename = f)
+  sym <- table(Table(gpl)$"Gene Symbol")
   write.table(table(Table(gpl)$"Gene Symbol"), file = "GeneSymbol.txt")
   setwd("../")
+  return(sym)
 }
 
 ExtractInfo <- function(x,d = "."){
@@ -54,7 +56,7 @@ DataUnion <- function(d = "."){
 #GEO(read.table("MultipleSclerosis_Chips.txt"),"./MultipleSclerosis_GSE")
 
 GEO(read.table("geos.txt"),"./Alz")
-GeneSymbol("GPL570")
+gene <- GeneSymbol("GPL570")
 D <- DataUnion("./Alz")
 
 AD <- DataUnion("./Alzheimer_GSE")
@@ -64,7 +66,7 @@ dim(PD)
 dim(AD)
 dim(MS)
 
-DF <- data.frame(x = c(1, 2, 3), y = c(0, 10, NA))
-na.omit(DF)
-m <- as.matrix(DF)
-na.omit(m)
+f <- dir(".")[grep("GPL570",dir("."))]
+f <- f[grep(".soft$",f)]
+gpl <- getGEO(filename = f)
+sym <- Table(gpl)
