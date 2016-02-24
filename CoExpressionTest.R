@@ -70,3 +70,5 @@ f <- dir(".")[grep("GPL570",dir("."))]
 f <- f[grep(".soft$",f)]
 gpl <- getGEO(filename = f)
 sym <- Table(gpl)
+p <- data.frame(sym$ID,sym$`Gene Symbol`, stringsAsFactors = F)
+q <- data.frame(p, names(PD), PD, stringsAsFactors = F)
