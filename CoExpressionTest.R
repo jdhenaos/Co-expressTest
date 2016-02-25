@@ -79,5 +79,7 @@ s <- data.frame(unique(r$sym..Gene.Symbol.), c(0), stringsAsFactors = F)
 write.table(s, file = "vacio.txt")
 
 for(i in as.vector(s[,1])){
-  s[grep(i,s$unique.r.sym..Gene.Symbol..),2] <- max(r[grep(i,r$sym..Gene.Symbol.),3])
+  s[grep(paste0("^",i,"$"),s$unique.r.sym..Gene.Symbol..),2] <- 
+    max(r[grep(paste0("^",i,"$"),r$sym..Gene.Symbol.),3])
 }
+y <- s[-c(grep("^$",s$unique.r.sym..Gene.Symbol..)),]
