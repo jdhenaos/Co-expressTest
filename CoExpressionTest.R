@@ -56,41 +56,38 @@ FilterData <- function(fi,gene){
   p <- data.frame(gene$`Gene Symbol`, stringsAsFactors = F)
   q <- data.frame(p, names(fi), fi, stringsAsFactors = F)
   r <- subset(q, q$fi >= a[5])
-  s <- data.frame(unique(r$sym..Gene.Symbol.), c(0), stringsAsFactors = F)
+  s <- data.frame(unique(r$gene..Gene.Symbol.), c(0), stringsAsFactors = F)
   for(i in as.vector(s[,1])){
-    s[grep(paste0("^",i,"$"),s$unique.r.sym..Gene.Symbol..),2] <- 
-      max(r[grep(paste0("^",i,"$"),r$sym..Gene.Symbol.),3])
+    s[grep(paste0("^",i,"$"),s$unique.r.gene..Gene.Symbol..),2] <- 
+      max(r[grep(paste0("^",i,"$"),r$gene..Gene.Symbol.),3])
   }
-  y <- s[-c(grep("^$",s$unique.r.sym..Gene.Symbol..)),]
+  y <- s[-c(grep("^$",s$unique.r.gene..Gene.Symbol..)),]
   return(y)
 }
 
 #GEO(read.table("Alzheimer_Chips.txt"),"./Alzheimer_GSE")
 #GEO(read.table("Parkinson_Chips.txt"),"./Parkinson_GSE")
 #GEO(read.table("MultipleSclerosis_Chips.txt"),"./MultipleSclerosis_GSE")
-
-GEO(read.table("geos.txt"),"./Alz")
 gene <- GeneSymbol("GPL570")
-D <- DataUnion("./Alz")
 
 AD <- DataUnion("./Alzheimer_GSE")
 PD <- DataUnion("./Parkinson_GSE")
 MS <- DataUnion("./MultipleSclerosis_GSE")
-dim(PD)
-dim(AD)
-dim(MS)
 
-final <- FilterData(PD,gene)
+AD2 <- FilterData(AD,gene)
+PD2 <- FilterData(PD,gene)
+MS2 <- FilterData(MS,gene)
+##############################################################
 
 a <- summary(PD)
 f <- dir(".")[grep("GPL570",dir("."))]
 f <- f[grep(".soft$",f)]
 gpl <- getGEO(filename = f)
 sym <- Table(gpl)
-p <- data.frame(sym$`Gene Symbol`, stringsAsFactors = F)
+p <- data.frame(gene$`Gene Symbol`, stringsAsFactors = F)
 q <- data.frame(p, names(PD), PD, stringsAsFactors = F)
 r <- subset(q, q$PD >= a[5])
-s <- data.frame(unique(r$sym..Gene.Symbol.), c(0), stringsAsFactors = F)
+s <- data.frame(unique(r$gene..Gene.Symbol.), c(0), stringsAsFactors = F)
 
 for(i in as.vector(s[,1])){
   s[grep(paste0("^",i,"$"),s$unique.r.sym..Gene.Symbol..),2] <- 
