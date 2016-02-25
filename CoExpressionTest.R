@@ -16,9 +16,9 @@ GeneSymbol <- function(GPL, d = "."){
   f <- dir(".")[grep(GPL,dir("."))]
   f <- f[grep(".soft$",f)]
   gpl <- getGEO(filename = f)
-  sym <- table(Table(gpl)$"Gene Symbol")
-  write.table(table(Table(gpl)$"Gene Symbol"), file = "GeneSymbol.txt")
-  setwd("../")
+  sym <- Table(gpl)
+  #write.table(table(Table(gpl)$"Gene Symbol"), file = "GeneSymbol.txt")
+  #setwd("../")
   return(sym)
 }
 
@@ -51,6 +51,20 @@ DataUnion <- function(d = "."){
   return(y)
 }
 
+FilterData <- function(fi,gene){
+  a <- summary(fi)
+  p <- data.frame(gene$`Gene Symbol`, stringsAsFactors = F)
+  q <- data.frame(p, names(fi), fi, stringsAsFactors = F)
+  r <- subset(q, q$fi >= a[5])
+  s <- data.frame(unique(r$sym..Gene.Symbol.), c(0), stringsAsFactors = F)
+  for(i in as.vector(s[,1])){
+    s[grep(paste0("^",i,"$"),s$unique.r.sym..Gene.Symbol..),2] <- 
+      max(r[grep(paste0("^",i,"$"),r$sym..Gene.Symbol.),3])
+  }
+  y <- s[-c(grep("^$",s$unique.r.sym..Gene.Symbol..)),]
+  return(y)
+}
+
 #GEO(read.table("Alzheimer_Chips.txt"),"./Alzheimer_GSE")
 #GEO(read.table("Parkinson_Chips.txt"),"./Parkinson_GSE")
 #GEO(read.table("MultipleSclerosis_Chips.txt"),"./MultipleSclerosis_GSE")
@@ -66,6 +80,8 @@ dim(PD)
 dim(AD)
 dim(MS)
 
+final <- FilterData(PD,gene)
+
 a <- summary(PD)
 f <- dir(".")[grep("GPL570",dir("."))]
 f <- f[grep(".soft$",f)]
@@ -75,8 +91,6 @@ p <- data.frame(sym$`Gene Symbol`, stringsAsFactors = F)
 q <- data.frame(p, names(PD), PD, stringsAsFactors = F)
 r <- subset(q, q$PD >= a[5])
 s <- data.frame(unique(r$sym..Gene.Symbol.), c(0), stringsAsFactors = F)
-
-write.table(s, file = "vacio.txt")
 
 for(i in as.vector(s[,1])){
   s[grep(paste0("^",i,"$"),s$unique.r.sym..Gene.Symbol..),2] <- 
