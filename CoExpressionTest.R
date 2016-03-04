@@ -41,7 +41,7 @@ DataUnion <- function(d = "."){
       options(warn = -1)
     }else{
       h <- ExtractInfo(t,d)
-      g <- merge.data.frame(g,h,by.x = "ID_REF",by.y = "ID_REF",all = TRUE)
+      g <- merge.data.frame(g,h)
     }
   }
   ng <- g[,2:dim(g)[2]]
