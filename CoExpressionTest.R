@@ -47,16 +47,19 @@ DataUnion <- function(d = "."){
   ng <- g[,2:dim(g)[2]]
   t <- sapply(ng, as.numeric)
   tt <- as.data.frame(t, row.names = g$ID_REF)
-  y <- rowMeans(tt, na.rm = T)
+  y <- rowMeans(tt)
   return(y)
 }
 
 FilterData <- function(fi,gene){
-  a <- summary(fi)
-  p <- data.frame(gene$`Gene Symbol`, stringsAsFactors = F)
-  q <- data.frame(p, names(fi), fi, stringsAsFactors = F)
-  r <- subset(q, q$fi >= a[5])
-  s <- data.frame(unique(r$gene..Gene.Symbol.), c(0), stringsAsFactors = F)
+  #a <- summary(fi)
+  #p <- data.frame(gene$`Gene Symbol`, stringsAsFactors = F)
+  #q <- data.frame(p, names(fi), fi, stringsAsFactors = F)
+  #r <- subset(q, q$fi >= a[5])
+  #s <- data.frame(unique(q$gene..Gene.Symbol.), c(0), stringsAsFactors = F)
+  
+  
+  
   for(i in as.vector(s[,1])){
     s[grep(paste0("^",i,"$"),s$unique.r.gene..Gene.Symbol..),2] <- 
       max(r[grep(paste0("^",i,"$"),r$gene..Gene.Symbol.),3])
@@ -77,20 +80,3 @@ MS <- DataUnion("./MultipleSclerosis_GSE")
 AD2 <- FilterData(AD,gene)
 PD2 <- FilterData(PD,gene)
 MS2 <- FilterData(MS,gene)
-##############################################################
-
-a <- summary(PD)
-f <- dir(".")[grep("GPL570",dir("."))]
-f <- f[grep(".soft$",f)]
-gpl <- getGEO(filename = f)
-sym <- Table(gpl)
-p <- data.frame(gene$`Gene Symbol`, stringsAsFactors = F)
-q <- data.frame(p, names(PD), PD, stringsAsFactors = F)
-r <- subset(q, q$PD >= a[5])
-s <- data.frame(unique(r$gene..Gene.Symbol.), c(0), stringsAsFactors = F)
-
-for(i in as.vector(s[,1])){
-  s[grep(paste0("^",i,"$"),s$unique.r.sym..Gene.Symbol..),2] <- 
-    max(r[grep(paste0("^",i,"$"),r$sym..Gene.Symbol.),3])
-}
-y <- s[-c(grep("^$",s$unique.r.sym..Gene.Symbol..)),]
