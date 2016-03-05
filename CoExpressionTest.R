@@ -88,7 +88,12 @@ sym <- Table(gpl)
 ta <- data.frame(sym$ID, sym$`Gene Symbol`, stringsAsFactors = F)
 
 da <- data.frame(ta,c(0),stringsAsFactors = F)
+
+for(t in PD){
+  
+}
+
 for(i in as.vector(s[,1])){
-  s[grep(paste0("^",i,"$"),s$unique.r.gene..Gene.Symbol..),2] <- 
+  da[grep(paste0("^","117_at","$"),da$gene.ID),3] <- 
     max(r[grep(paste0("^",i,"$"),r$gene..Gene.Symbol.),3])
 }
