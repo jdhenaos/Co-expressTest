@@ -91,8 +91,7 @@ da <- data.frame(ta,c(0),stringsAsFactors = F)
 
 n <- data.frame(names(PD),PD, stringsAsFactors = F)
 m <- merge.data.frame(n, da, by.x = "names.PD.", by.y = "gene.ID")
-
-
+l <- data.frame(m$gene..Gene.Symbol.,m$PD,stringsAsFactors = F)
 
 for(i in as.vector(s[,1])){
   da[grep(paste0("^","117_at","$"),da$gene.ID),3] <- 
