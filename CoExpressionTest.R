@@ -17,9 +17,10 @@ GeneSymbol <- function(GPL, d = "."){
   f <- f[grep(".soft$",f)]
   gpl <- getGEO(filename = f)
   sym <- Table(gpl)
+  ta <- data.frame(sym$ID, sym$`Gene Symbol`, stringsAsFactors = F)
   #write.table(table(Table(gpl)$"Gene Symbol"), file = "GeneSymbol.txt")
   #setwd("../")
-  return(sym)
+  return(ta)
 }
 
 ExtractInfo <- function(x,d = "."){
@@ -52,20 +53,18 @@ DataUnion <- function(d = "."){
 }
 
 FilterData <- function(fi,gene){
-  #a <- summary(fi)
-  #p <- data.frame(gene$`Gene Symbol`, stringsAsFactors = F)
-  #q <- data.frame(p, names(fi), fi, stringsAsFactors = F)
-  #r <- subset(q, q$fi >= a[5])
-  #s <- data.frame(unique(q$gene..Gene.Symbol.), c(0), stringsAsFactors = F)
+  da <- data.frame(gene,c(0),stringsAsFactors = F)
+  n <- data.frame(names(fi),fi, stringsAsFactors = F)
+  m <- merge.data.frame(n, da, by.x = "names.fi.", by.y = "sym.ID")
+  l <- data.frame(m$sym..Gene.Symbol.,m$fi,stringsAsFactors = F)
+  k <- l[-c(grep(paste0("^","$"),l[,1])),]
+  j <- data.frame(unique(k$m.sym..Gene.Symbol.), c(0), stringsAsFactors = F)
   
-  
-  
-  for(i in as.vector(s[,1])){
-    s[grep(paste0("^",i,"$"),s$unique.r.gene..Gene.Symbol..),2] <- 
-      max(r[grep(paste0("^",i,"$"),r$gene..Gene.Symbol.),3])
+  for(i in as.vector(j[,1])){
+    j[grep(paste0("^",i,"$"),j[,1]),2] <-
+      max(l[grep(paste0("^",i,"$"),l[,1]),2])
   }
-  y <- s[-c(grep("^$",s$unique.r.gene..Gene.Symbol..)),]
-  return(y)
+  return(j)
 }
 
 #GEO(read.table("Alzheimer_Chips.txt"),"./Alzheimer_GSE")
@@ -90,7 +89,6 @@ sym <- Table(gpl)
 ta <- data.frame(sym$ID, sym$`Gene Symbol`, stringsAsFactors = F)
 
 da <- data.frame(ta,c(0),stringsAsFactors = F)
-
 n <- data.frame(names(PD),PD, stringsAsFactors = F)
 m <- merge.data.frame(n, da, by.x = "names.PD.", by.y = "gene.ID")
 l <- data.frame(m$gene..Gene.Symbol.,m$PD,stringsAsFactors = F)
