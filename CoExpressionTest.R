@@ -89,9 +89,13 @@ ta <- data.frame(sym$ID, sym$`Gene Symbol`, stringsAsFactors = F)
 
 da <- data.frame(ta,c(0),stringsAsFactors = F)
 
-for(t in PD){
-  
+for(t in names(PD)){
+  da[grep(paste0("^",t,"$"),da$gene.ID),3] <-
+    PD[t]
 }
+
+n <- data.frame(names(PD),PD, stringsAsFactors = F)
+m <- merge.data.frame(n, da, by.x = "names.PD.", by.y = "gene.ID")
 
 for(i in as.vector(s[,1])){
   da[grep(paste0("^","117_at","$"),da$gene.ID),3] <- 
