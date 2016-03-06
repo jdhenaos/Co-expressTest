@@ -95,10 +95,9 @@ n <- data.frame(names(PD),PD, stringsAsFactors = F)
 m <- merge.data.frame(n, da, by.x = "names.PD.", by.y = "gene.ID")
 l <- data.frame(m$gene..Gene.Symbol.,m$PD,stringsAsFactors = F)
 k <- l[-c(grep(paste0("^","$"),l[,1])),]
-j <- data.frame(unique(k[,1]), c(0), stringsAsFactors = F)
+j <- data.frame(unique(k$m.gene..Gene.Symbol.), c(0), stringsAsFactors = F)
 
 for(i in as.vector(j[,1])){
-  print(j[grep(paste0("^",i,"$"),j$unique.k...1..),2])
-  #j[grep(paste0("^",i,"$"),j[,1]),2] <-
-    #max(l[grep(paste0("^",i,"$"),l[,1]),2])
+  j[grep(paste0("^",i,"$"),j[,1]),2] <-
+    max(l[grep(paste0("^",i,"$"),l[,1]),2])
 }
