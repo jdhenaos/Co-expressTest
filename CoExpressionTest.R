@@ -81,6 +81,8 @@ AD2 <- FilterData(AD,gene)
 PD2 <- FilterData(PD,gene)
 MS2 <- FilterData(MS,gene)
 
+######################################################################
+
 f <- dir(".")[grep("GPL570",dir("."))]
 f <- f[grep(".soft$",f)]
 gpl <- getGEO(filename = f)
@@ -92,8 +94,11 @@ da <- data.frame(ta,c(0),stringsAsFactors = F)
 n <- data.frame(names(PD),PD, stringsAsFactors = F)
 m <- merge.data.frame(n, da, by.x = "names.PD.", by.y = "gene.ID")
 l <- data.frame(m$gene..Gene.Symbol.,m$PD,stringsAsFactors = F)
+k <- l[-c(grep(paste0("^","$"),l[,1])),]
+j <- data.frame(unique(k[,1]), c(0), stringsAsFactors = F)
 
-for(i in as.vector(s[,1])){
-  da[grep(paste0("^","117_at","$"),da$gene.ID),3] <- 
-    max(r[grep(paste0("^",i,"$"),r$gene..Gene.Symbol.),3])
+for(i in as.vector(j[,1])){
+  print(j[grep(paste0("^",i,"$"),j$unique.k...1..),2])
+  #j[grep(paste0("^",i,"$"),j[,1]),2] <-
+    #max(l[grep(paste0("^",i,"$"),l[,1]),2])
 }
