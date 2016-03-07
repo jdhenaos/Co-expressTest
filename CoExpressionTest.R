@@ -98,29 +98,6 @@ AD2 <- FilterData(AD,gene)
 PD2 <- FilterData(PD,gene)
 MS2 <- FilterData(MS,gene)
 
-FPD <- SummaryFilter(PD2,2)
-FAD <- SummaryFilter(AD2,2)
-FMS <- SummaryFilter(MS2,2)
-
-#########################################################
-
-su <- summary(PD2[,2])
-
-if(n == 1){
-  fil <- PD2[PD2[,2] >= su[2],]
-}else if(n == 2){
-  fil <- PD2[PD2[,2] >= su[3],]
-}else if(n == 3){
-  fil <- PD2[PD2[,2] >= su[5],]
-}else if(n == "Mean"){
-  fil <- PD2[PD2[,2] >= su[4],]
-}else{
-  print("La opcion es incorrecta")
-}
-
-
-
-
-
-
-
+FPD <- SummaryFilter(PD2,"Mean")
+FAD <- SummaryFilter(AD2,"Mean")
+FMS <- SummaryFilter(MS2,"Mean")
