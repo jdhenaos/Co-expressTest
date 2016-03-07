@@ -79,23 +79,3 @@ MS <- DataUnion("./MultipleSclerosis_GSE")
 AD2 <- FilterData(AD,gene)
 PD2 <- FilterData(PD,gene)
 MS2 <- FilterData(MS,gene)
-
-######################################################################
-
-f <- dir(".")[grep("GPL570",dir("."))]
-f <- f[grep(".soft$",f)]
-gpl <- getGEO(filename = f)
-sym <- Table(gpl)
-ta <- data.frame(sym$ID, sym$`Gene Symbol`, stringsAsFactors = F)
-
-da <- data.frame(ta,c(0),stringsAsFactors = F)
-n <- data.frame(names(PD),PD, stringsAsFactors = F)
-m <- merge.data.frame(n, da, by.x = "names.PD.", by.y = "gene.ID")
-l <- data.frame(m$gene..Gene.Symbol.,m$PD,stringsAsFactors = F)
-k <- l[-c(grep(paste0("^","$"),l[,1])),]
-j <- data.frame(unique(k$m.gene..Gene.Symbol.), c(0), stringsAsFactors = F)
-
-for(i in as.vector(j[,1])){
-  j[grep(paste0("^",i,"$"),j[,1]),2] <-
-    max(l[grep(paste0("^",i,"$"),l[,1]),2])
-}
