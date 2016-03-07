@@ -67,6 +67,10 @@ FilterData <- function(fi,gene){
   return(j)
 }
 
+SummaryFilter <- function(Data,Qu){
+  
+}
+
 #GEO(read.table("Alzheimer_Chips.txt"),"./Alzheimer_GSE")
 #GEO(read.table("Parkinson_Chips.txt"),"./Parkinson_GSE")
 #GEO(read.table("MultipleSclerosis_Chips.txt"),"./MultipleSclerosis_GSE")
@@ -79,3 +83,27 @@ MS <- DataUnion("./MultipleSclerosis_GSE")
 AD2 <- FilterData(AD,gene)
 PD2 <- FilterData(PD,gene)
 MS2 <- FilterData(MS,gene)
+
+#########################################################
+
+su <- summary(PD2[,2])
+
+if(n == 1){
+  fil <- PD2[PD2[,2] >= su[2]]
+  print(su[2])
+}else if(n == 2){
+  fil <- PD2[PD2[,2] >= su[3]]
+}else if(n == 3){
+  fil <- PD2[PD2[,2] >= su[5]]
+}else if(n == "Mean"){
+  fil <- PD2[PD2[,2] >= su[4]]
+}else{
+  print("La opcion es incorrecta")
+}
+
+
+
+
+
+
+
