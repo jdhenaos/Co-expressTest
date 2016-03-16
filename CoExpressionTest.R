@@ -114,6 +114,10 @@ for(n in PD2[,2]){
 }
 
 
-
+y <- names(mPD[grep(PD2[1,2],mPD)])
+x <- PD[grep(paste0("^",y,"$"),row.names(PD)),]
+row.names(x) <- PD2[1,1]
+ds <- sd(x)
+total <- ds/mPD[y]
 
 
