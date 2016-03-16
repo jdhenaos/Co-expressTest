@@ -104,6 +104,8 @@ FAD <- SummaryFilter(AD2,"Mean")
 FMS <- SummaryFilter(MS2,"Mean")
 
 ##################################################
+mPD <- rowMeans(PD)
+
 
 da <- data.frame(gene,c(0),stringsAsFactors = F)
 names(da) <- c("a","b","c")
@@ -121,7 +123,6 @@ for(i in as.vector(k[,1])){
 
 
 
-mPD <- rowMeans(PD)
 h <- data.frame()
 for(n in PD2[,2]){
   y <- names(mPD[grep(n,mPD)])
