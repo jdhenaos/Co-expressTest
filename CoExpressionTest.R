@@ -119,7 +119,7 @@ for(n in PD2[,2]){
   }else{
     h <- rbind(h,c(names(total),total))
   }
-  
+  result <- as.data.frame(h)
 }
 
 
