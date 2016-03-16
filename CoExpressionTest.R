@@ -105,6 +105,22 @@ FMS <- SummaryFilter(MS2,"Mean")
 
 ##################################################
 
+da <- data.frame(gene,c(0),stringsAsFactors = F)
+names(da) <- c("a","b","c")
+n <- data.frame(names(mPD),mPD, stringsAsFactors = F)
+names(n) <- c("a","b")
+m <- merge.data.frame(n, da, by.x = "a", by.y = "a")
+l <- data.frame(m$b.y,m$b.x, row.names = m$a,stringsAsFactors = F)
+k <- l[-c(grep(paste0("^","$"),l[,1])),]
+k <- cbind(k,0)
+
+for(i in as.vector(k[,1])){
+  k[grep(paste0("^",i,"$"),k[,1]),2] <-
+    max(l[grep(paste0("^",i,"$"),l[,1]),2])
+}
+
+
+
 mPD <- rowMeans(PD)
 h <- data.frame()
 for(n in PD2[,2]){
