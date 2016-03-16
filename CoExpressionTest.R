@@ -48,8 +48,7 @@ DataUnion <- function(d = "."){
   ng <- g[,2:dim(g)[2]]
   t <- sapply(ng, as.numeric)
   tt <- as.data.frame(t, row.names = g$ID_REF)
-  y <- rowMeans(tt)
-  return(y)
+  return(tt)
 }
 
 FilterData <- function(fi,gene){
@@ -94,10 +93,13 @@ AD <- DataUnion("./Alzheimer_GSE")
 PD <- DataUnion("./Parkinson_GSE")
 MS <- DataUnion("./MultipleSclerosis_GSE")
 
-AD2 <- FilterData(AD,gene)
-PD2 <- FilterData(PD,gene)
-MS2 <- FilterData(MS,gene)
+AD2 <- FilterData(rowMeans(AD),gene)
+PD2 <- FilterData(rowMeans(PD),gene)
+MS2 <- FilterData(rowMeans(MS),gene)
 
 FPD <- SummaryFilter(PD2,"Mean")
 FAD <- SummaryFilter(AD2,"Mean")
 FMS <- SummaryFilter(MS2,"Mean")
+
+##################################################
+
