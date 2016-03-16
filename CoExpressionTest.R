@@ -105,9 +105,9 @@ FMS <- SummaryFilter(MS2,"Mean")
 
 ##################################################
 
-y <- names(mPD[grep(PD2[1,2],mPD)])
+y <- names(mPD[grep(PD2[3,2],mPD)])
 x <- PD[grep(paste0("^",y,"$"),row.names(PD)),]
 ds <- sd(x)
-
+total <- ds/mPD[y]
 
 
