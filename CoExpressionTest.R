@@ -93,6 +93,8 @@ AD <- DataUnion("./Alzheimer_GSE")
 PD <- DataUnion("./Parkinson_GSE")
 MS <- DataUnion("./MultipleSclerosis_GSE")
 
+mPD <- rowMeans(PD)
+
 AD2 <- FilterData(rowMeans(AD),gene)
 PD2 <- FilterData(rowMeans(PD),gene)
 MS2 <- FilterData(rowMeans(MS),gene)
@@ -102,4 +104,10 @@ FAD <- SummaryFilter(AD2,"Mean")
 FMS <- SummaryFilter(MS2,"Mean")
 
 ##################################################
+
+y <- names(mPD[grep(PD2[1,2],mPD)])
+x <- PD[grep(paste0("^",y,"$"),row.names(PD)),]
+ds <- sd(x)
+
+
 
