@@ -115,27 +115,12 @@ FMS <- SummaryFilter(MS2,"Mean")
 
 ##################################################
 mPD <- rowMeans(PD)
-
+nPD <- PD2
 h <- data.frame()
-for(n in PD2[,2]){
-  y <- names(mPD[grep(n,mPD)])
-  x <- PD[grep(paste0("^",y,"$"),row.names(PD)),]
-  ds <- sd(x)
-  total <- ds/mPD[y]
-  t <- mPD[grep(paste0("^",y,"$"),names(mPD))]
-  names(total) <- PD2[grep(paste0("^",t,"$"),PD2[,2]),1]
-  if(length(h) == 0){
-    h <- rbind(c(names(total),total))
-  }else{
-    h <- rbind(h,c(names(total),total))
-  }
-  result <- as.data.frame(h)
+for(n in row.names(PD2)){
+  nPD[n,2] <- sd(PD[n,])/PD2[n,2]
 }
 
 
-y <- names(mPD[grep(PD2[1,2],mPD)])
-x <- PD[grep(paste0("^",y,"$"),row.names(PD)),]
-ds <- sd(x)
-total <- ds/mPD[y]
-names(total) <- PD2[grep(paste0("^",PD2[1,2],"$"),PD2[,2]),1]
+
 
