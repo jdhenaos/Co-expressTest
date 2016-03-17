@@ -116,10 +116,16 @@ l <- data.frame(m$b.y,m$b.x, row.names = m$a,stringsAsFactors = F)
 k <- l[-c(grep(paste0("^","$"),l[,1])),]
 #k <- cbind(k,0)
 j <- k[,1]
+g <- data.frame()
 
 for(x in j){
   i<- k[grep(paste0("^",x,"$"),k[,1]),]
   h <- i[grep(max(k[grep(paste0("^",x,"$"),k[,1]),2]),i[,2]),]
+  if(length(g) == 0){
+    g <- rbind(h)
+  }else{
+    g <- rbind(g,h)
+  }
 }
 
 
