@@ -52,18 +52,28 @@ DataUnion <- function(d = "."){
 }
 
 FilterData <- function(fi,gene){
+  mPD <- rowMeans(PD)
   da <- data.frame(gene,c(0),stringsAsFactors = F)
-  n <- data.frame(names(fi),fi, stringsAsFactors = F)
-  m <- merge.data.frame(n, da, by.x = "names.fi.", by.y = "sym.ID")
-  l <- data.frame(m$sym..Gene.Symbol.,m$fi,stringsAsFactors = F)
+  names(da) <- c("a","b","c")
+  n <- data.frame(names(mPD),mPD, stringsAsFactors = F)
+  names(n) <- c("a","b")
+  m <- merge.data.frame(n, da, by.x = "a", by.y = "a")
+  l <- data.frame(m$b.y,m$b.x, row.names = m$a,stringsAsFactors = F)
   k <- l[-c(grep(paste0("^","$"),l[,1])),]
-  j <- data.frame(unique(k$m.sym..Gene.Symbol.), c(0), stringsAsFactors = F)
+  #k <- cbind(k,0)
+  j <- unique(k[,1])
+  g <- data.frame()
   
-  for(i in as.vector(j[,1])){
-    j[grep(paste0("^",i,"$"),j[,1]),2] <-
-      max(l[grep(paste0("^",i,"$"),l[,1]),2])
+  for(x in j){
+    i<- k[grep(paste0("^",x,"$"),k[,1]),]
+    h <- i[grep(max(k[grep(paste0("^",x,"$"),k[,1]),2]),i[,2]),]
+    if(length(g) == 0){
+      g <- rbind(h)
+    }else{
+      g <- rbind(g,h)
+    }
   }
-  return(j)
+  return(g)
 }
 
 SummaryFilter <- function(Data,Qu){
@@ -105,30 +115,6 @@ FMS <- SummaryFilter(MS2,"Mean")
 
 ##################################################
 mPD <- rowMeans(PD)
-
-
-da <- data.frame(gene,c(0),stringsAsFactors = F)
-names(da) <- c("a","b","c")
-n <- data.frame(names(mPD),mPD, stringsAsFactors = F)
-names(n) <- c("a","b")
-m <- merge.data.frame(n, da, by.x = "a", by.y = "a")
-l <- data.frame(m$b.y,m$b.x, row.names = m$a,stringsAsFactors = F)
-k <- l[-c(grep(paste0("^","$"),l[,1])),]
-#k <- cbind(k,0)
-j <- unique(k[,1])
-g <- data.frame()
-
-for(x in j){
-  i<- k[grep(paste0("^",x,"$"),k[,1]),]
-  h <- i[grep(max(k[grep(paste0("^",x,"$"),k[,1]),2]),i[,2]),]
-  if(length(g) == 0){
-    g <- rbind(h)
-  }else{
-    g <- rbind(g,h)
-  }
-}
-
-
 
 h <- data.frame()
 for(n in PD2[,2]){
