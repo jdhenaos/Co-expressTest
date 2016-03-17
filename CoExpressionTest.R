@@ -115,7 +115,7 @@ m <- merge.data.frame(n, da, by.x = "a", by.y = "a")
 l <- data.frame(m$b.y,m$b.x, row.names = m$a,stringsAsFactors = F)
 k <- l[-c(grep(paste0("^","$"),l[,1])),]
 #k <- cbind(k,0)
-j <- k[,1]
+j <- unique(k[,1])
 g <- data.frame()
 
 for(x in j){
