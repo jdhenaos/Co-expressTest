@@ -114,11 +114,12 @@ names(n) <- c("a","b")
 m <- merge.data.frame(n, da, by.x = "a", by.y = "a")
 l <- data.frame(m$b.y,m$b.x, row.names = m$a,stringsAsFactors = F)
 k <- l[-c(grep(paste0("^","$"),l[,1])),]
-k <- cbind(k,0)
+#k <- cbind(k,0)
+j <- k[,1]
 
-for(i in as.vector(k[,1])){
-  k[grep(paste0("^",i,"$"),k[,1]),2] <-
-    max(l[grep(paste0("^",i,"$"),l[,1]),2])
+for(x in j){
+  i<- k[grep(paste0("^",x,"$"),k[,1]),]
+  h <- i[grep(max(k[grep(paste0("^",x,"$"),k[,1]),2]),i[,2]),]
 }
 
 
