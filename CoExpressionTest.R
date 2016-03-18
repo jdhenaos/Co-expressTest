@@ -93,6 +93,17 @@ SummaryFilter <- function(Data,Qu){
   return(fil)
 }
 
+CovarFilter <- function(son,gen,x,d=FALSE){
+  mPD <- rowMeans(son)
+  h <- data.frame()
+  for(n in row.names(gen)){
+    gen[n,2] <- sd(son[n,])/gen[n,2]
+  }
+  
+  li <- gen[order(gen$m.b.x, decreasing = d),]
+  fil <- li[1:as.integer((dim(li)[1]*x)/100),] 
+}
+
 #GEO(read.table("Alzheimer_Chips.txt"),"./Alzheimer_GSE")
 #GEO(read.table("Parkinson_Chips.txt"),"./Parkinson_GSE")
 #GEO(read.table("MultipleSclerosis_Chips.txt"),"./MultipleSclerosis_GSE")
@@ -111,6 +122,14 @@ MS2 <- FilterData(MS,gene)
 FPD <- SummaryFilter(PD2,"Mean")
 FAD <- SummaryFilter(AD2,"Mean")
 FMS <- SummaryFilter(MS2,"Mean")
+
+CAD <- CovarFilter(AD,AD2,5,TRUE)
+CPD <- CovarFilter(PD,PD2,5,TRUE)
+CMS <- CovarFilter(MS,MS2,5,TRUE)
+
+CAD2 <- CovarFilter(AD,AD2,10,TRUE)
+CPD2 <- CovarFilter(PD,PD2,10,TRUE)
+CMS2 <- CovarFilter(MS,MS2,10,TRUE)
 
 ##################################################
 mPD <- rowMeans(PD)
