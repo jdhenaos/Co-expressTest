@@ -60,7 +60,6 @@ FilterData <- function(fi,gene){
   m <- merge.data.frame(n, da, by.x = "a", by.y = "a")
   l <- data.frame(m$b.y,m$b.x, row.names = m$a,stringsAsFactors = F)
   k <- l[-c(grep(paste0("^","$"),l[,1])),]
-  #k <- cbind(k,0)
   j <- unique(k[,1])
   g <- data.frame()
   
@@ -121,6 +120,6 @@ for(n in row.names(PD2)){
   nPD[n,2] <- sd(PD[n,])/PD2[n,2]
 }
 
-
+li <- nPD[order(nPD$m.b.x),]
 
 
