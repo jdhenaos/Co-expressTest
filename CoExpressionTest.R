@@ -52,7 +52,7 @@ DataUnion <- function(d = "."){
 }
 
 FilterData <- function(fi,gene){
-  mPD <- rowMeans(PD)
+  mPD <- rowMeans(fi)
   da <- data.frame(gene,c(0),stringsAsFactors = F)
   names(da) <- c("a","b","c")
   n <- data.frame(names(mPD),mPD, stringsAsFactors = F)
