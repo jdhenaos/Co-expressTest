@@ -120,6 +120,6 @@ for(n in row.names(PD2)){
   nPD[n,2] <- sd(PD[n,])/PD2[n,2]
 }
 
-li <- nPD[order(nPD$m.b.x),]
-
+li <- nPD[order(nPD$m.b.x, decreasing = TRUE),]
+fil <- li[1:as.integer((dim(li)[1]*5)/100),]
 
