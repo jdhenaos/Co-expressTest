@@ -51,7 +51,7 @@ DataUnion <- function(d = "."){
   return(tt)
 }
 
-FilterData <- function(fi,gene){
+FilterData <- function(fi,gene,Median=FALSE){
   mPD <- rowMeans(fi)
   da <- data.frame(gene,c(0),stringsAsFactors = F)
   names(da) <- c("a","b","c")
@@ -63,13 +63,30 @@ FilterData <- function(fi,gene){
   j <- unique(k[,1])
   g <- data.frame()
   
-  for(x in j){
-    i<- k[grep(paste0("^",x,"$"),k[,1]),]
-    h <- i[grep(max(k[grep(paste0("^",x,"$"),k[,1]),2]),i[,2]),]
-    if(length(g) == 0){
-      g <- rbind(h)
-    }else{
-      g <- rbind(g,h)
+  i<- k[grep("DDR1",k[,1],fixed = T),]
+  h <- i[1,]
+  h[1,2] <- median(i[,2])
+  
+  if(Median){
+    for(x in j){
+      i<- k[grep(x,k[,1],fixed = T),]
+      h <- i[1,]
+      h[1,2] <- median(i[,2])
+      if(length(g) == 0){
+        g <- rbind(h)
+      }else{
+        g <- rbind(g,h)
+      }
+    }
+  }else{
+    for(x in j){
+      i<- k[grep(x,k[,1],fixed = T),]
+      h <- i[grep(max(k[grep(x,k[,1],fixed = T),2]),i[,2]),]
+      if(length(g) == 0){
+        g <- rbind(h)
+      }else{
+        g <- rbind(g,h)
+      }
     }
   }
   return(g)
@@ -132,6 +149,11 @@ CMS2 <- CovarFilter(MS,MS2,10,TRUE)
 
 ##################################################
 
+gene <- GeneSymbol("GPL570")
+PD <- DataUnion("./Parkinson_GSE")
+PD2 <- FilterData(PD,gene)
+PD3 <- FilterData(PD,gene,Median = T)
+
 mPD <- rowMeans(fi)
 da <- data.frame(gene,c(0),stringsAsFactors = F)
 names(da) <- c("a","b","c")
@@ -143,16 +165,31 @@ k <- l[-c(grep(paste0("^","$"),l[,1])),]
 j <- unique(k[,1])
 g <- data.frame()
 
-i<- k[grep(paste0("^","DDR1","$"),k[,1]),]
-h <- 0
+i<- k[grep("DDR1",k[,1],fixed = T),]
+h <- i[1,]
+h[1,2] <- median(i[,2])
 
-
-for(x in j){
-  i<- k[grep(paste0("^",x,"$"),k[,1]),]
-  h <- i[grep(max(k[grep(x,k[,1],fixed = T),2]),i[,2]),]
-  if(length(g) == 0){
-    g <- rbind(h)
-  }else{
-    g <- rbind(g,h)
+if(Median){
+  for(x in j){
+    i<- k[grep(x,k[,1],fixed = T),]
+    h <- i[1,]
+    h[1,2] <- median(i[,2])
+    if(length(g) == 0){
+      g <- rbind(h)
+    }else{
+      g <- rbind(g,h)
+    }
+  }
+}else{
+  for(x in j){
+    i<- k[grep(x,k[,1],fixed = T),]
+    h <- i[grep(max(k[grep(x,k[,1],fixed = T),2]),i[,2]),]
+    if(length(g) == 0){
+      g <- rbind(h)
+    }else{
+      g <- rbind(g,h)
+    }
   }
 }
+
+
