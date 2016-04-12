@@ -143,9 +143,13 @@ k <- l[-c(grep(paste0("^","$"),l[,1])),]
 j <- unique(k[,1])
 g <- data.frame()
 
+i<- k[grep(paste0("^","DDR1","$"),k[,1]),]
+h <- 0
+
+
 for(x in j){
   i<- k[grep(paste0("^",x,"$"),k[,1]),]
-  h <- i[grep(max(k[grep(paste0("^",x,"$"),k[,1]),2]),i[,2]),]
+  h <- i[grep(max(k[grep(x,k[,1],fixed = T),2]),i[,2]),]
   if(length(g) == 0){
     g <- rbind(h)
   }else{
