@@ -113,7 +113,6 @@ AD <- DataUnion("./Alzheimer_GSE")
 PD <- DataUnion("./Parkinson_GSE")
 MS <- DataUnion("./MultipleSclerosis_GSE")
 
-###Arreglar filter data adicionando promedios a la funcion
 
 AD2 <- FilterData(AD,gene)
 PD2 <- FilterData(PD,gene)
@@ -132,13 +131,24 @@ CPD2 <- CovarFilter(PD,PD2,10,TRUE)
 CMS2 <- CovarFilter(MS,MS2,10,TRUE)
 
 ##################################################
-mPD <- rowMeans(PD)
-nPD <- PD2
-h <- data.frame()
-for(n in row.names(PD2)){
-  nPD[n,2] <- sd(PD[n,])/PD2[n,2]
+
+mPD <- rowMeans(fi)
+da <- data.frame(gene,c(0),stringsAsFactors = F)
+names(da) <- c("a","b","c")
+n <- data.frame(names(mPD),mPD, stringsAsFactors = F)
+names(n) <- c("a","b")
+m <- merge.data.frame(n, da, by.x = "a", by.y = "a")
+l <- data.frame(m$b.y,m$b.x, row.names = m$a,stringsAsFactors = F)
+k <- l[-c(grep(paste0("^","$"),l[,1])),]
+j <- unique(k[,1])
+g <- data.frame()
+
+for(x in j){
+  i<- k[grep(paste0("^",x,"$"),k[,1]),]
+  h <- i[grep(max(k[grep(paste0("^",x,"$"),k[,1]),2]),i[,2]),]
+  if(length(g) == 0){
+    g <- rbind(h)
+  }else{
+    g <- rbind(g,h)
+  }
 }
-
-li <- nPD[order(nPD$m.b.x, decreasing = TRUE),]
-fil <- li[1:as.integer((dim(li)[1]*5)/100),]
-
