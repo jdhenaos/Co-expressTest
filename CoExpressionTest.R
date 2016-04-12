@@ -130,29 +130,35 @@ AD <- DataUnion("./Alzheimer_GSE")
 PD <- DataUnion("./Parkinson_GSE")
 MS <- DataUnion("./MultipleSclerosis_GSE")
 
-
 AD2 <- FilterData(AD,gene)
 PD2 <- FilterData(PD,gene)
 MS2 <- FilterData(MS,gene)
+
+AD3 <- FilterData(AD,gene,Median = T)
+PD3 <- FilterData(PD,gene,Median = T)
+MS3 <- FilterData(MS,gene,Median = T)
 
 FPD <- SummaryFilter(PD2,"Mean")
 FAD <- SummaryFilter(AD2,"Mean")
 FMS <- SummaryFilter(MS2,"Mean")
 
+FPD2 <- SummaryFilter(PD3,"Mean")
+FAD2 <- SummaryFilter(AD3,"Mean")
+FMS2 <- SummaryFilter(MS3,"Mean")
+
 CAD <- CovarFilter(AD,AD2,5,TRUE)
 CPD <- CovarFilter(PD,PD2,5,TRUE)
 CMS <- CovarFilter(MS,MS2,5,TRUE)
+
+CAD2 <- CovarFilter(AD,AD3,5,TRUE)
+CPD2 <- CovarFilter(PD,PD3,5,TRUE)
+CMS2 <- CovarFilter(MS,MS3,5,TRUE)
 
 CAD2 <- CovarFilter(AD,AD2,10,TRUE)
 CPD2 <- CovarFilter(PD,PD2,10,TRUE)
 CMS2 <- CovarFilter(MS,MS2,10,TRUE)
 
 ##################################################
-
-gene <- GeneSymbol("GPL570")
-PD <- DataUnion("./Parkinson_GSE")
-PD2 <- FilterData(PD,gene)
-PD3 <- FilterData(PD,gene,Median = T)
 
 mPD <- rowMeans(fi)
 da <- data.frame(gene,c(0),stringsAsFactors = F)
