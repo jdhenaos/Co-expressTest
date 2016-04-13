@@ -161,8 +161,9 @@ CMS2 <- CovarFilter(MS,MS2,10,TRUE)
 ##################################################
 
 db <- gene[grep(paste0("^","$"),gene$sym..Gene.Symbol.,invert = T),]
+names(db) <- c("probe","gene")
 
+na <- PD[grep(paste0("^","1007_s_at","$"),row.names(PD)),]
+row.names(na) <- "DDR1"
 
-
-
-
+li <- unique(db$gene)
