@@ -160,42 +160,9 @@ CMS2 <- CovarFilter(MS,MS2,10,TRUE)
 
 ##################################################
 
-mPD <- rowMeans(fi)
-da <- data.frame(gene,c(0),stringsAsFactors = F)
-names(da) <- c("a","b","c")
-n <- data.frame(names(mPD),mPD, stringsAsFactors = F)
-names(n) <- c("a","b")
-m <- merge.data.frame(n, da, by.x = "a", by.y = "a")
-l <- data.frame(m$b.y,m$b.x, row.names = m$a,stringsAsFactors = F)
-k <- l[-c(grep(paste0("^","$"),l[,1])),]
-j <- unique(k[,1])
-g <- data.frame()
+db <- gene[grep(paste0("^","$"),gene$sym..Gene.Symbol.,invert = T),]
 
-i<- k[grep("DDR1",k[,1],fixed = T),]
-h <- i[1,]
-h[1,2] <- median(i[,2])
 
-if(Median){
-  for(x in j){
-    i<- k[grep(x,k[,1],fixed = T),]
-    h <- i[1,]
-    h[1,2] <- median(i[,2])
-    if(length(g) == 0){
-      g <- rbind(h)
-    }else{
-      g <- rbind(g,h)
-    }
-  }
-}else{
-  for(x in j){
-    i<- k[grep(x,k[,1],fixed = T),]
-    h <- i[grep(max(k[grep(x,k[,1],fixed = T),2]),i[,2]),]
-    if(length(g) == 0){
-      g <- rbind(h)
-    }else{
-      g <- rbind(g,h)
-    }
-  }
-}
+
 
 
