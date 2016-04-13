@@ -121,6 +121,29 @@ CovarFilter <- function(son,gen,x,d=FALSE){
   fil <- li[1:as.integer((dim(li)[1]*x)/100),] 
 }
 
+meanProbe <- function(gene,array){
+  db <- gene[grep(paste0("^","$"),gene$sym..Gene.Symbol.,invert = T),]
+  names(db) <- c("probe","gene")
+  li <- unique(db$gene)
+  g <- data.frame()
+  
+  for(i in li){
+    su <- db[grep(paste0("^",i,"$"),db$gene),]
+    me <- c(i,sapply(array[su$probe,], mean))
+    
+    if(length(g) == 0){
+      g <- rbind(me)
+    }else{
+      g <- rbind(g,me)
+    }
+  }
+  
+  row.names(g) <- g[,1]
+  fi <- g[,2:dim(g)[2]]
+  
+  return(fi)
+}
+
 #GEO(read.table("Alzheimer_Chips.txt"),"./Alzheimer_GSE")
 #GEO(read.table("Parkinson_Chips.txt"),"./Parkinson_GSE")
 #GEO(read.table("MultipleSclerosis_Chips.txt"),"./MultipleSclerosis_GSE")
@@ -158,15 +181,26 @@ CAD2 <- CovarFilter(AD,AD2,10,TRUE)
 CPD2 <- CovarFilter(PD,PD2,10,TRUE)
 CMS2 <- CovarFilter(MS,MS2,10,TRUE)
 
+PARK <- meanProbe(gene,PD)
+ALZ <- meanProbe(gene,AD)
+ESMU <- meanProbe(gene,MS)
 ##################################################
-ar <- PD
 
 db <- gene[grep(paste0("^","$"),gene$sym..Gene.Symbol.,invert = T),]
-
 names(db) <- c("probe","gene")
-rr <- ar[!va[1,],]
-
-na <- PD[grep(paste0("^","1007_s_at","$"),row.names(ar)),]
-row.names(na) <- "DDR1"
-
 li <- unique(db$gene)
+g <- data.frame()
+
+for(i in li){
+  su <- db[grep(paste0("^",i,"$"),db$gene),]
+  me <- c(i,sapply(ar[su$probe,], mean))
+  
+  if(length(g) == 0){
+    g <- rbind(me)
+  }else{
+    g <- rbind(g,me)
+  }
+}
+
+row.names(g) <- g[,1]
+fi <- g[,2:dim(g)[2]]
