@@ -208,3 +208,12 @@ fi <- g[,2:dim(g)[2]]
 ###############################################
 
 ay <- PD
+ge <- gene
+
+pl <- ge[row.names(ay),]
+names(pl) <- c("probe","gene")
+cl <- cbind(g,ay)
+
+
+
+
