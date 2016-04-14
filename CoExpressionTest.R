@@ -122,26 +122,23 @@ CovarFilter <- function(son,gen,x,d=FALSE){
 }
 
 meanProbe <- function(gene,array){
-  db <- gene[grep(paste0("^","$"),gene$sym..Gene.Symbol.,invert = T),]
-  names(db) <- c("probe","gene")
-  li <- unique(db$gene)
+  pl <- gene[row.names(array),]
+  names(pl) <- c("probe","gene")
+  cl <- cbind(pl,array)
+  fl <- cl[grep(paste0("^","$"),cl$gene,invert = T),]
   g <- data.frame()
   
-  for(i in li){
-    su <- db[grep(paste0("^",i,"$"),db$gene),]
-    me <- c(i,sapply(array[su$probe,], mean))
+  for(i in unique(fl$gene)){
+    e <- fl[grep(paste0("^",i,"$"),fl$gene),]
+    f <- sapply(e[,3:dim(e)[2]],median)
     
     if(length(g) == 0){
-      g <- rbind(me)
+      g <- rbind(as.data.frame(t(f),row.names = i))
     }else{
-      g <- rbind(g,me)
+      g <- rbind(g,as.data.frame(t(f),row.names = i))
     }
   }
-  
-  row.names(g) <- g[,1]
-  fi <- g[,2:dim(g)[2]]
-  
-  return(fi)
+  return(g)
 }
 
 #GEO(read.table("Alzheimer_Chips.txt"),"./Alzheimer_GSE")
@@ -150,7 +147,7 @@ meanProbe <- function(gene,array){
 gene <- GeneSymbol("GPL570")
 
 AD <- DataUnion("./Alzheimer_GSE")
-PD <- DataUnion("./Parkinson_GSE")
+#PD <- DataUnion("./Parkinson_GSE")
 MS <- DataUnion("./MultipleSclerosis_GSE")
 
 AD2 <- FilterData(AD,gene)
@@ -214,14 +211,16 @@ pl <- ge[row.names(ay),]
 names(pl) <- c("probe","gene")
 cl <- cbind(pl,ay)
 fl <- cl[grep(paste0("^","$"),cl$gene,invert = T),]
-
-e <- fl[grep(paste0("^","DDR1","$"),fl$gene),]
-f <- sapply(e[,3:dim(e)[2]],median)
-
 g <- data.frame()
-if(length(g) == 0){
-  g <- rbind(as.data.frame(t(f),row.names = "DDR1"))
-  #row.names(g[f,]) <- "DDR1"
-}else{
-  g <- rbind(g,as.data.frame(t(f),row.names = "APP"))
+
+for(i in unique(fl$gene)){
+  e <- fl[grep(paste0("^",i,"$"),fl$gene),]
+  f <- sapply(e[,3:dim(e)[2]],median)
+  
+  if(length(g) == 0){
+    g <- rbind(as.data.frame(t(f),row.names = i))
+  }else{
+    g <- rbind(g,as.data.frame(t(f),row.names = i))
+  }
 }
+
