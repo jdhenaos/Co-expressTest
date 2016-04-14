@@ -212,8 +212,16 @@ ge <- gene
 
 pl <- ge[row.names(ay),]
 names(pl) <- c("probe","gene")
-cl <- cbind(g,ay)
+cl <- cbind(pl,ay)
+fl <- cl[grep(paste0("^","$"),cl$gene,invert = T),]
 
+e <- fl[grep(paste0("^","DDR1","$"),fl$gene),]
+f <- sapply(e[,3:dim(e)[2]],median)
 
-
-
+g <- data.frame()
+if(length(g) == 0){
+  g <- rbind(as.data.frame(t(f),row.names = "DDR1"))
+  #row.names(g[f,]) <- "DDR1"
+}else{
+  g <- rbind(g,as.data.frame(t(f),row.names = "APP"))
+}
