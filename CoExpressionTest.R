@@ -122,6 +122,7 @@ CovarFilter <- function(son,gen,x,d=FALSE){
 }
 
 meanProbe <- function(gene,array){
+  row.names(gene) <- gene$sym.ID
   pl <- gene[row.names(array),]
   names(pl) <- c("probe","gene")
   cl <- cbind(pl,array)
@@ -207,6 +208,7 @@ fi <- g[,2:dim(g)[2]]
 ay <- PD
 ge <- gene
 
+row.names(ge) <- ge$sym.ID
 pl <- ge[row.names(ay),]
 names(pl) <- c("probe","gene")
 cl <- cbind(pl,ay)
